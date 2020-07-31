@@ -26,7 +26,9 @@ func (p *Process) Fork(exe *process.Executable) (*process.PID, error) {
 
 	cmd.Dir = exe.Dir
 	// set env vars
-	cmd.Env = append(cmd.Env, os.Environ()...)
+	// cmd.Env = append(cmd.Env, os.Environ()...)
+	// what do we need to actually run the process?
+	cmd.Env = append(cmd.Env, os.ExpandEnv("GOROOT=${GOROOT}"), os.ExpandEnv("PATH=${PATH}"), os.ExpandEnv("GOPATH=${GOPATH}"), os.ExpandEnv("HOME=${HOME}"), os.ExpandEnv("HOSTNAME=${HOSTNAME}"))
 	cmd.Env = append(cmd.Env, exe.Env...)
 
 	// create process group
